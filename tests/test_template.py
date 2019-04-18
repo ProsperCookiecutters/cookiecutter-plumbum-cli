@@ -38,6 +38,12 @@ def test_build_rst(cookies):
 
     rstcheck(result.project.join('README.rst'))
 
+def test_black(cookies):
+    result = cookies.bake()
+
+    black(result.project.join('setup.py'), '-S', '--check', retcode=0)
+    black(result.project.join('default_project_name'), '-S', '--check', retcode=0)
+
 @pytest.mark.slow
 def test_sdist(cookies):
     result = cookies.bake()
