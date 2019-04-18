@@ -7,8 +7,8 @@
     "author_email": "fake@fake.com",
     "github_username": "fakegithub",
     "docs_filetype": [
-        ".md", 
-        ".rst"
+        "md", 
+        "rst"
     ],
     "license": [
         "MIT",

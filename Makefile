@@ -15,15 +15,18 @@ clean:
 $(VENV_FILE):
 	@virtualenv $(VENV_FILE) -p python3
 
-$(VENV_FILE)/lib/python*/site-packages/cookiecutter/: $(VENV_FILE)
+$(VENV_FILE)/bin/black: $(VENV_FILE)
+	@${WHICH_PIP} install black
+
+$(VENV_FILE)/bin/cookiecutter: $(VENV_FILE)
 	@${WHICH_PIP} install cookiecutter
 
-$(VENV_FILE)/lib/python*/site-packages/tox/: $(VENV_FILE)
+$(VENV_FILE)/bin/tox: $(VENV_FILE)
 	@$(WHICH_PIP) install tox
 	@$(WHICH_PIP) install tox-pyenv
 
 .PHONY: venv
-venv: $(VENV_FILE) $(VENV_FILE)/lib/python*/site-packages/cookiecutter/ $(VENV_FILE)/lib/python*/site-packages/tox/
+venv: $(VENV_FILE) $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/black
 
 .PHONY: build
 build: venv

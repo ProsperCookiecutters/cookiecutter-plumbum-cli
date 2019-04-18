@@ -23,28 +23,18 @@ setup(
     description='{{cookiecutter.project_brief}}',
     long_description=__readme__,
     python_requires='>=3.6',
-    {%- if cookiecutter.docs_filetype == 'md' -%}
+    {%- if cookiecutter.docs_filetype == 'md' %}
     long_description_content_type='text/markdown',
-    {%- endif -%}
-    install_requires=[
-        'plumbum',
-    ],
-    extras_require={
-        'dev': [
-            'tox',
-            'tox-pyenv',
-            'sphinx',
-            'black',
+    {%- endif %}
+    install_requires=['plumbum'],
+    extras_require={'dev': ['tox', 'tox-pyenv', 'sphinx', 'black'
             {%- if cookiecutter.docs_filetype == 'md' -%}
-            'markdown',
+            , 'markdown'
             {%- elif cookiecutter.docs_filetype == 'rst' -%}
-            'rstcheck',
+            , 'rstcheck'
             {%- endif -%}
-        ]
-    },
+    ]},
     entry_points={
-        'console_scripts': [
-            '{{cookiecutter.cli_command}}={{cookiecutter.import_name}}.app:run_plumbum',
-        ],
+        'console_scripts': ['{{cookiecutter.cli_command}}={{cookiecutter.import_name}}.app:run_plumbum']
     },
 )
