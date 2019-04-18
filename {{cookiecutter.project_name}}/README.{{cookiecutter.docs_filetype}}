@@ -1,0 +1,5 @@
+{%- if cookiecutter.docs_filetype == "rst" -%}
+{%- include '_docs/README.rst' %}
+{%- if cookiecutter.docs_filetype == "md" -%}
+{%- include '_docs/README.md' %}
+{%- endif -%}

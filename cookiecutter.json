@@ -1,3 +1,20 @@
 {
-    "project_name": "DEFAULT-project-name"
+    "project_name": "DEFAULT-project-name",
+    "import_name": "{{ cookiecutter.project_name|lower|replace('-', '_') }}",
+    "author_name": "Jane Doe",
+    "author_email": "fake@fake.com",
+    "github_username": "fakegithub",
+    "docs_filetype": [
+        ".md", 
+        ".rst"
+    ],
+    "license": [
+        "MIT",
+        "BSD-3",
+        "GNU GPL v3.0",
+        "Apache Software License 2.0",
+        "Mozilla Public License 2.0"
+    ],
+    "docker_image": "revolutionsystems/python:3.7.1-wee-optimized-lto",
+    "template_version": "1.0.0"
 }
