@@ -1,6 +1,8 @@
 {
     "project_name": "DEFAULT-project-name",
     "import_name": "{{ cookiecutter.project_name|lower|replace('-', '_') }}",
+    "cli_command": "{{ cookiecutter.project_name|lower|replace('_', '-') }}",
+    "project_brief": "brief description of what your project is for",
     "author_name": "Jane Doe",
     "author_email": "fake@fake.com",
     "github_username": "fakegithub",
