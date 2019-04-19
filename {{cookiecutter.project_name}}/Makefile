@@ -24,7 +24,7 @@ clean:
 	-@rm build
 	-@rm install
 
-$(VENV_FILE): setup.py Dockerfile
+$(VENV_FILE): setup.py 
 	@virtualenv $(VENV_FILE) -p python3
 	@touch $@
 $(VENV_FILE)/bin/wheel: $(VENV_FILE)
@@ -33,7 +33,7 @@ $(VENV_FILE)/bin/black: $(VENV_FILE)
 	@pip install black
 $(VENV_FILE)/bin/twine: $(VENV_FILE)
 	@pip install twine
-$(VENV_FILE)/bin/black: $(VENV_FILE)
+$(VENV_FILE)/bin/sphinx: $(VENV_FILE)
 	@pip install sphinx
 install: $(VENV_FILE) setup.py
 	@$(WHICH_PIP) install -e .

@@ -17,6 +17,6 @@
         "Apache Software License 2.0",
         "Mozilla Public License 2.0"
     ],
-    "docker_image": "revolutionsystems/python:3.7.1-wee-optimized-lto",
+    "tox_pyenvs": "py37,py36",
     "template_version": "1.0.0"
 }

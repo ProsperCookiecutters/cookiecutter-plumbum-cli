@@ -66,11 +66,17 @@ def test_sdist(cookies):
 
 @pytest.mark.slow
 def test_makefile(cookies):
-    result = cookies.bake()
+    result = cookies.bake(
+        extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+    )
     with plumbum.local.cwd(result.project) as cwd:
         make = plumbum.local['make']
 
         test = make('test')
+        print(test)
         black = make('black', '$BLACK_ARGS="--check"')
+        print(black)
         build = make('build')
+        print(build)
         install = make('install')
+        print(install)
