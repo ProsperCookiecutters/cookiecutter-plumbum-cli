@@ -63,3 +63,14 @@ def test_sdist(cookies):
 
         # Validate cli/entry_points work
         my_cli = plumbum.local[cwd / '.tmpenv/bin/default-project-name']
+
+@pytest.mark.slow
+def test_makefile(cookies):
+    result = cookies.bake()
+    with plumbum.local.cwd(result.project) as cwd:
+        make = plumbum.local['make']
+
+        test = make('test')
+        black = make('black', '$BLACK_ARGS="--check"')
+        build = make('build')
+        install = make('install')

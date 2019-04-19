@@ -4,6 +4,7 @@
 DOCKER_IMAGE_NAME={{cookiecutter.project_name}}
 DOCKER_HOME_DIR=/opt/{{cookiecutter.project_name}}
 PYPI_REPOSITORY_URL=
+BLACK_ARGS=
 VENV_FILE=.venv
 VERSION=1.0.0
 WHICH_PYTHON=$(VENV_FILE)/bin/python
@@ -39,15 +40,12 @@ install: $(VENV_FILE) setup.py
 	@touch $@
 
 .PHONY: test
-test: install
-	-@tox
+test: 
+	@tox
 
 .PHONY: black
 black: $(VENV_FILE)/bin/black
-	-@docker run --rm \
-		-v $(PWD):$(DOCKER_HOME_DIR)/
-		$(DOCKER_IMAGE_NAME) \
-		black -S {{cookiecutter.import_name}}
+	@black -S $(BLACK_ARGS)
 
 dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz: $(VENV_FILE) 
 	@$(WHICH_PYTHON) setup.py sdist
@@ -68,13 +66,15 @@ register: $(VENV_FILE)/bin/twine build
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz
+		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz \
+		$(PYPI_EXTRA_ARGS)
 
 	@twine register \
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl
+		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl \
+		$(PYPI_EXTRA_ARGS)
 
 .PHONY: upload
 upload: $(VENV_FILE)/bin/twine build
@@ -82,10 +82,12 @@ upload: $(VENV_FILE)/bin/twine build
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz
+		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz \
+		$(PYPI_EXTRA_ARGS)
 
 	@twine upload \
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl
+		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl \
+		$(PYPI_EXTRA_ARGS)
