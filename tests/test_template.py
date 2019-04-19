@@ -69,14 +69,16 @@ def test_makefile(cookies):
     result = cookies.bake(
         extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
     )
+    # with open(result.project.join('tox.ini')) as f:
+    #     print(f.read())
     with plumbum.local.cwd(result.project) as cwd:
         make = plumbum.local['make']
 
-        test = make('test', f'$TOX_ENV_NAME={os.environ["TOX_ENV_NAME"]}')
-        print(test)
         black = make('black', '$BLACK_ARGS="--check"')
         print(black)
         build = make('build')
         print(build)
         install = make('install')
         print(install)
+        test = make('test')
+        print(test)
