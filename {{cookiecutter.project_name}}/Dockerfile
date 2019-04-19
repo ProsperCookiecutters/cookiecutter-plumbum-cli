@@ -2,8 +2,9 @@ FROM {{cookiecutter.docker_image}}
 
 ARG VERSION
 ARG SPECIAL_INSTALL
+ARG DOCKER_HOME_DIR
 
-COPY . /opt/{{cookiecutter.project_name}}
+COPY . ${DOCKER_HOME_DIR}
 
-WORKDIR /opt/{{cookiecutter.project_name}}
+WORKDIR ${DOCKER_HOME_DIR}
 RUN sudo pip3 install .$SPECIAL_INSTALL
