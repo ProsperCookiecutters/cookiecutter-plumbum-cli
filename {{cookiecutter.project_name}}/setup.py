@@ -1,5 +1,4 @@
 # Author: {{cookiecutter.author_name}}
-# Email: {{cookiecutter.author_email}}
 # GENERATED: cookiecutter-plumbum-cli:{{cookiecutter.template_version}} {% now 'utc', '%Y-%m-%d' %}
 """packaging information for {{cookiecutter.project_name}}"""
 
@@ -14,6 +13,9 @@ __version__ = os.environ.get('VERSION', '0.0.0')
 with codecs.open('README.{{cookiecutter.docs_filetype}}', 'r', 'utf-8') as readme_fh:
     __readme__ = readme_fh.read()
 
+with open(os.path.join(__library_name__, 'VERSION'), 'w') as version_fh:
+    version_fh.write(__version__.strip())
+
 setup(
     name=__package_name__,
     author='{{cookiecutter.author_name}}',
@@ -26,6 +28,7 @@ setup(
     {%- if cookiecutter.docs_filetype == 'md' %}
     long_description_content_type='text/markdown',
     {%- endif %}
+    package_data={__library_name__: ['VERSION']},
     install_requires=['plumbum'],
     extras_require={
         'dev': ['tox', 'tox-pyenv', 'sphinx', 'black', 'twine'

@@ -72,7 +72,7 @@ def test_makefile(cookies):
     with plumbum.local.cwd(result.project) as cwd:
         make = plumbum.local['make']
 
-        test = make('test')
+        test = make('test', f'$TOX_ENV_NAME={os.environ["TOX_ENV_NAME"]}')
         print(test)
         black = make('black', '$BLACK_ARGS="--check"')
         print(black)

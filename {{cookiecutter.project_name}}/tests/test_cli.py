@@ -17,6 +17,11 @@ def find_bin_path():
 
 python = plumbum.local[os.path.join(find_bin_path(), 'python')]
 virtualenv = plumbum.local[os.path.join(find_bin_path(), 'virtualenv')]
+cli = plumbum.local[os.path.join(find_bin_path(), '{{cookiecutter.cli_command}}')]
+def test_help():
+    output = cli('-h')
 
-def test_hello_world():
-    assert True
+def test_version():
+    output = cli('--version').strip()
+
+    assert output == f'{{cookiecutter.project_name}} {os.environ.get("VERSION", "0.0.0")}'

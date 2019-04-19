@@ -1,6 +1,7 @@
 VENV_FILE=.venv
 WHICH_PYTHON=$(VENV_FILE)/bin/python
 WHICH_PIP=$(VENV_FILE)/bin/pip
+TOX_ENVLIST=py36,py37
 
 clean:
 	-@rm -rf $(VENV_FILE)
@@ -48,17 +49,16 @@ $(VENV_FILE)/bin/tox: $(VENV_FILE)
 venv: $(VENV_FILE) $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/black
 
 .PHONY: pyenv
-# pyenv: ${HOME}/.pyenv/versions/3.7.3 ${HOME}/.pyenv/versions/3.6.7
 pyenv:
 	@pyenv local 3.7.3
 	@pyenv local 3.6.7
 	@eval "$(pyenv init -)"
 
 .PHONY: build
-build: venv
+build: $(VENV_FILE)/bin/cookiecutter
 	-@rm -rf DEFAULT-*
-	@cookiecutter . --no-input
+	@$(VENV_FILE)/bin/cookiecutter . --no-input
 
 .PHONY: test
 test: venv pyenv 
-	@tox
+	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST)
