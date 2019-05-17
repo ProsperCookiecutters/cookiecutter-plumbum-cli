@@ -8,6 +8,14 @@ Template for creating CLI's with Plumbum
 Install [Cookiecutter](https://github.com/audreyr/cookiecutter) and generate a new pytest plugin project:
 
 ```no-highlight
+$ git clone git@github.com:ProsperCookiecutters/cookiecutter-plumbum-cli.git
+$ cd cookiecutter-plumbum-cli
+$ make build
+```
+
+** OR **
+ 
+```no-highlight
 $ pip install cookiecutter
 $ cookiecutter https://github.com/ProsperCookiecutters/cookiecutter-plumbum-cli
 ```
