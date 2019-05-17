@@ -4,7 +4,6 @@
 """Plumbum.cli application file"""
 
 import logging
-import logging.handlers
 import os
 import sys
 
