@@ -9,7 +9,7 @@ matrix:
       dist: xenial
 
 install:
-  - make test-install
+  - make venv
 
 script:
   - make test 

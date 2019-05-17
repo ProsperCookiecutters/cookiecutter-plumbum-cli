@@ -45,9 +45,6 @@ $(VENV_FILE)/bin/tox: $(VENV_FILE)
 	@$(WHICH_PIP) install tox
 	@$(WHICH_PIP) install tox-pyenv
 
-.PHONY: test-install
-test-install: $(VENV_FILE) $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/black
-
 .PHONY: venv
 venv: $(VENV_FILE) $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/black
 
@@ -63,7 +60,7 @@ build: $(VENV_FILE)/bin/cookiecutter
 	@$(VENV_FILE)/bin/cookiecutter . --no-input
 
 .PHONY: test
-test: venv pyenv 
+test: venv  
 	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST) ${TOX_ARGS}
 
 .PHONY: fast
