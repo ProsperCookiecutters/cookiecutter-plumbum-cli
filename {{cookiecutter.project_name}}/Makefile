@@ -33,6 +33,9 @@ $(VENV_FILE)/bin/twine: $(VENV_FILE)
 	@$(WHICH_PIP) install twine
 $(VENV_FILE)/bin/sphinx: $(VENV_FILE)
 	@$(WHICH_PIP) install sphinx
+$(VENV_FILE)/bin/tox: $(VENV_FILE)
+	@$(WHICH_PIP) install tox
+
 install: $(VENV_FILE) setup.py
 	@$(WHICH_PIP) install -e .
 	@touch $@
@@ -42,7 +45,7 @@ test-install: $(VENV_FILE) setup.py
 	@touch $@
 
 .PHONY: test
-test: 
+test: $(VENV_FILE)/bin/tox
 	@tox -e $(TOX_ENVLIST)
 
 .PHONY: black
