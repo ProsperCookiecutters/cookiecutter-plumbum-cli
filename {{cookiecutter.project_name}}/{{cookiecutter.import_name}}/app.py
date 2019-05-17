@@ -9,6 +9,7 @@ import os
 import sys
 
 from plumbum import cli
+from . import exceptions
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 _PROGNAME = '{{cookiecutter.project_name}}'
@@ -42,37 +43,25 @@ class {{ cookiecutter.cli_command | replace('-', ' ') | replace('_', ' ') | titl
     )
     _logger = None
 
-    @property
-    def logger(self):
-        if self._logger:
-            return self._logger
-
-        self._logger = logging.getLogger(self.PROGNAME)
-        formatter = logging.Formatter(
-            '[%(levelname)s:%(filename)s--%(funcName)s:%(lineno)s] %(message).1000s'
-        )
-
+    def init_logger(self):
+        """build a basicConfig logger for project"""
         if self.debug:
-            self._logger.setLevel('DEBUG')
+            logging.basicConfig(
+                format='[%(levelname)s:%(filename)s--%(funcName)s:%(lineno)s] %(message)s',
+                level=self.log_level,
+                stream=self.verbose_stream
+            )
         else:
-            self._logger.setLevel(self.log_level)
-
-        handler = logging.handlers.TimedRotatingFileHandler(
-            os.path.join(self.log_dir, f'{self.PROGNAME}.log')
-        )
-        handler.setFormatter(formatter)
-        self._logger.addHandler(handler)
-
-        if self.verbose:
-            v_handler = logging.StreamHandler()
-            v_handler.setFormatter(formatter)
-            self._logger.addHandler(v_handler)
-
-        return self._logger
+            logging.basicConfig(
+                format='[%(levelname)s:%(filename)s--%(funcName)s:%(lineno)s] %(message)s',
+                level=self.log_level,
+                stream=self.verbose_stream
+            )
 
     def main(self):
         """project main goes here"""
-        self.logger.info('HELLO WORLD')
+        self.init_logger()  # MAGIC -- DO NOT DELETE <3
+        logging.info('HELLO WORLD')
 
 
 def run_plumbum():
