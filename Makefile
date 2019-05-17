@@ -61,7 +61,7 @@ build: $(VENV_FILE)/bin/cookiecutter
 
 .PHONY: test
 test: venv  
-	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST) ${TOX_ARGS}
+	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST) ${TOX_ARGS} -- -n 4
 
 .PHONY: fast
 fast: venv pyenv

@@ -69,25 +69,54 @@ def test_sdist(cookies):
         # Validate cli/entry_points work
         my_cli = plumbum.local[cwd / '.tmpenv/bin/default-project-name']
 
-@pytest.mark.slow
-def test_makefile(cookies):
-    """validate makefile commands run without error"""
-    result = cookies.bake(
-        extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
-    )
-    with plumbum.local.cwd(result.project) as cwd:
-        make = plumbum.local['make']
 
-        black = make('black', '$BLACK_ARGS="--check"')
-        print(black)
-        build = make('build')
-        print(build)
-        install = make('install')
-        print(install)
-        test = make('test')
-        print(test)
-        check = make('check')
-        print(check)
+class TestMakefile:
+    make = plumbum.local['make']
+
+    @pytest.mark.slow
+    def test_black(self, cookies):
+        """validate makefile commands run without error"""
+        result = cookies.bake(
+            extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+        )
+        with plumbum.local.cwd(result.project) as cwd:
+            black = self.make('black', '$BLACK_ARGS="--check"')
+
+    @pytest.mark.slow
+    def test_build(self, cookies):
+        """validate makefile commands run without error"""
+        result = cookies.bake(
+            extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+        )
+        with plumbum.local.cwd(result.project) as cwd:
+            build = self.make('build')
+
+    @pytest.mark.slow
+    def test_install(self, cookies):
+        """validate makefile commands run without error"""
+        result = cookies.bake(
+            extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+        )
+        with plumbum.local.cwd(result.project) as cwd:
+            install = self.make('install')
+
+    @pytest.mark.slow
+    def test_test(self, cookies):
+        """validate makefile commands run without error"""
+        result = cookies.bake(
+            extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+        )
+        with plumbum.local.cwd(result.project) as cwd:
+            test = self.make('test')
+
+    @pytest.mark.slow
+    def test_check(self, cookies):
+        """validate makefile commands run without error"""
+        result = cookies.bake(
+            extra_context={'tox_pyenvs': os.environ.get('TOX_ENV_NAME', 'py37')}
+        )
+        with plumbum.local.cwd(result.project) as cwd:
+            check = self.make('check')
 
 def test_cleanup(cookies):
     """makes sure all _{pattern} directories have been cleaned out of resuts"""
@@ -96,4 +125,3 @@ def test_cleanup(cookies):
     with plumbum.local.cwd(result.project) as cwd:
         for filename in [x.name for x in cwd.list()]:
             assert not re.match(r'^_', filename)
-
