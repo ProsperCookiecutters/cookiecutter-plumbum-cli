@@ -40,7 +40,6 @@ class {{ cookiecutter.cli_command | replace('-', ' ') | replace('_', ' ') | titl
         help='Logging reporting default',
         default=os.environ.get('LOG_LEVEL', 'INFO'),
     )
-    _logger = None
 
     def init_logger(self):
         """build a basicConfig logger for project"""
@@ -48,13 +47,13 @@ class {{ cookiecutter.cli_command | replace('-', ' ') | replace('_', ' ') | titl
             logging.basicConfig(
                 format='[%(levelname)s:%(filename)s--%(funcName)s:%(lineno)s] %(message)s',
                 level=self.log_level,
-                stream=self.verbose_stream
+                stream=self.verbose_stream,
             )
         else:
             logging.basicConfig(
                 format='[%(levelname)s:%(filename)s--%(funcName)s:%(lineno)s] %(message)s',
                 level=self.log_level,
-                stream=self.verbose_stream
+                stream=self.verbose_stream,
             )
 
     def main(self):
