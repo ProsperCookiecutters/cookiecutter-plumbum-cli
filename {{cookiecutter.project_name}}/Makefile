@@ -27,13 +27,13 @@ $(VENV_FILE): setup.py
 	@virtualenv $(VENV_FILE) -p python3
 	@touch $@
 $(VENV_FILE)/bin/wheel: $(VENV_FILE)
-	@pip install wheel
+	@$(WHICH_PIP) install wheel
 $(VENV_FILE)/bin/black: $(VENV_FILE)
-	@pip install black
+	@$(WHICH_PIP) install black
 $(VENV_FILE)/bin/twine: $(VENV_FILE)
-	@pip install twine
+	@$(WHICH_PIP) install twine
 $(VENV_FILE)/bin/sphinx: $(VENV_FILE)
-	@pip install sphinx
+	@$(WHICH_PIP) install sphinx
 install: $(VENV_FILE) setup.py
 	@$(WHICH_PIP) install -e .
 	@touch $@
@@ -65,14 +65,7 @@ register: $(VENV_FILE)/bin/twine build
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz \
-		$(PYPI_EXTRA_ARGS)
-
-	@twine register \
-		--repository-url=$(PYPI_REPOSITORY_URL) \
-		-u $(PYPI_USERNAME) \
-		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl \
+		dist/ \
 		$(PYPI_EXTRA_ARGS)
 
 .PHONY: upload
@@ -81,12 +74,9 @@ upload: $(VENV_FILE)/bin/twine build
 		--repository-url=$(PYPI_REPOSITORY_URL) \
 		-u $(PYPI_USERNAME) \
 		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name}}-$(VERSION).tar.gz \
+		dist/ \
 		$(PYPI_EXTRA_ARGS)
 
-	@twine upload \
-		--repository-url=$(PYPI_REPOSITORY_URL) \
-		-u $(PYPI_USERNAME) \
-		-p $(PYPI_PASSWORD) \
-		dist/{{cookiecutter.project_name|replace('-', '_')}}-$(VERSION)*.whl \
-		$(PYPI_EXTRA_ARGS)
+.PHONY: check
+check: $(VENV_FILE)/bin/twine build
+	@twine check dist/*

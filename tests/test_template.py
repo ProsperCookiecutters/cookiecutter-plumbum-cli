@@ -86,6 +86,8 @@ def test_makefile(cookies):
         print(install)
         test = make('test')
         print(test)
+        check = make('check')
+        print(check)
 
 def test_cleanup(cookies):
     """makes sure all _{pattern} directories have been cleaned out of resuts"""
