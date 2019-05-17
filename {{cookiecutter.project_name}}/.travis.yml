@@ -1,0 +1,16 @@
+language: python
+
+matrix:
+  include:
+    - python: 3.6
+      env: TOX_ENVLIST=py36
+    - python: 3.7
+      env: TOX_ENVLIST=py37
+      dist: xenial
+
+install:
+  - make test-install
+
+script:
+  - make test 
+  - make black

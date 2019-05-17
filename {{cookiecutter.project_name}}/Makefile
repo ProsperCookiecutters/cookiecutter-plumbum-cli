@@ -38,6 +38,9 @@ install: $(VENV_FILE) setup.py
 	@$(WHICH_PIP) install -e .
 	@touch $@
 
+test-install: $(VENV_FILE) setup.py
+	@$(WHICH_PIP) install -e .[dev]
+	@touch $@
 .PHONY: test
 test: 
 	@tox -e $(TOX_ENVLIST)
