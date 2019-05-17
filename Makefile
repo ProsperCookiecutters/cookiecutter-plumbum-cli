@@ -45,6 +45,9 @@ $(VENV_FILE)/bin/tox: $(VENV_FILE)
 	@$(WHICH_PIP) install tox
 	@$(WHICH_PIP) install tox-pyenv
 
+.PHONY: test-install
+test-install: $(VENV_FILE) $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/black
+
 .PHONY: venv
 venv: $(VENV_FILE) $(VENV_FILE)/bin/cookiecutter $(VENV_FILE)/bin/tox $(VENV_FILE)/bin/black
 

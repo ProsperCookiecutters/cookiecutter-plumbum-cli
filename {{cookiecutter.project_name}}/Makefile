@@ -19,9 +19,8 @@ clean:
 	-@rm -rf .pytest_cache
 	-@rm .coverage
 	-@rm -rf .tox
-	-@rm -rf DEFAULT-*
-	-@rm build
 	-@rm install
+	-@rm test-install
 
 $(VENV_FILE): setup.py 
 	@virtualenv $(VENV_FILE) -p python3
@@ -41,6 +40,7 @@ install: $(VENV_FILE) setup.py
 test-install: $(VENV_FILE) setup.py
 	@$(WHICH_PIP) install -e .[dev]
 	@touch $@
+
 .PHONY: test
 test: 
 	@tox -e $(TOX_ENVLIST)
