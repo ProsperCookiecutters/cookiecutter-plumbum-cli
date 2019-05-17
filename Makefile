@@ -1,7 +1,6 @@
 VENV_FILE=.venv
 WHICH_PYTHON=$(VENV_FILE)/bin/python
 WHICH_PIP=$(VENV_FILE)/bin/pip
-TOX_ENVLIST=py36,py37
 
 clean:
 	-@rm -rf $(VENV_FILE)
