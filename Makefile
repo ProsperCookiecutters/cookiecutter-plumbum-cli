@@ -60,8 +60,8 @@ build: $(VENV_FILE)/bin/cookiecutter
 
 .PHONY: test
 test: venv  
-	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST) ${TOX_ARGS} -- -n 4
+	@$(VENV_FILE)/bin/tox $(TOX_ENVLIST) ${TOX_ARGS} -- -n 4
 
 .PHONY: fast
 fast: venv pyenv
-	@$(VENV_FILE)/bin/tox -e $(TOX_ENVLIST) ${TOX_ARGS} -- -m "not slow"
+	@$(VENV_FILE)/bin/tox $(TOX_ENVLIST) ${TOX_ARGS} -- -m "not slow"
