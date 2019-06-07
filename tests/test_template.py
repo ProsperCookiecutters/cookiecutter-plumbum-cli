@@ -26,20 +26,122 @@ black = plumbum.local[os.path.join(find_bin_path(), 'black')]
 rstcheck = plumbum.local[os.path.join(find_bin_path(), 'rstcheck')]
 virtualenv = plumbum.local[os.path.join(find_bin_path(), 'virtualenv')]
 
-def test_build_markdown(cookies):
-    """basic build test"""
-    result = cookies.bake(extra_context={'docs_filetype': 'md'})
-    assert result.exit_code == 0
+class TestREADME:
+    def test_build_markdown_default(self, cookies):
+        """basic build test"""
+        result = cookies.bake(extra_context={'docs_filetype': 'md'})
+        assert result.exit_code == 0
 
-    with open(result.project.join('README.md'), 'r') as readme:
-        markdown.markdown(readme.read())
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
 
-def test_build_rst(cookies):
-    """build with .rst docs"""
-    result = cookies.bake(extra_context={'docs_filetype': 'rst'})
-    assert result.exit_code == 0
+    def test_build_rst_default(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(extra_context={'docs_filetype': 'rst'})
+        assert result.exit_code == 0
 
-    rstcheck(result.project.join('README.rst'))
+        rstcheck(result.project.join('README.rst'))
+
+    def test_build_markdown_MIT(self, cookies):
+        """basic build test"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'md', 'license': 'MIT'})
+        assert result.exit_code == 0
+
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
+
+    def test_build_rst_default_MIT(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'rst', 'license': 'MIT'})
+        assert result.exit_code == 0
+
+        rstcheck(result.project.join('README.rst'))
+
+    def test_build_markdown_BSD3(self, cookies):
+        """basic build test"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'md', 'license': 'BSD-3'})
+        assert result.exit_code == 0
+
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
+
+    def test_build_rst_default_BSD3(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'rst', 'license': 'BSD-3'})
+        assert result.exit_code == 0
+
+        rstcheck(result.project.join('README.rst'))
+
+    def test_build_markdown_GNU(self, cookies):
+        """basic build test"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'md', 'license': 'GNU GPL v3.0'})
+        assert result.exit_code == 0
+
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
+
+    def test_build_rst_default_GNU(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(
+            extra_context={'docs_filetype': 'rst', 'license': 'GNU GPL v3.0'})
+        assert result.exit_code == 0
+
+        rstcheck(result.project.join('README.rst'))
+
+    def test_build_markdown_Apache(self, cookies):
+        """basic build test"""
+        result = cookies.bake(
+            extra_context={
+                'docs_filetype': 'md',
+                'license': 'Apache Software License 2.0'
+            }
+        )
+        assert result.exit_code == 0
+
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
+
+    def test_build_rst_default_Apache(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(
+            extra_context={
+                'docs_filetype': 'rst',
+                'license': 'Apache Software License 2.0',
+            }
+        )
+        assert result.exit_code == 0
+
+        rstcheck(result.project.join('README.rst'))
+
+    def test_build_markdown_Mozilla(self, cookies):
+        """basic build test"""
+        result = cookies.bake(
+            extra_context={
+                'docs_filetype': 'md',
+                'license': 'Mozilla Public License 2.0',
+            }
+        )
+        assert result.exit_code == 0
+
+        with open(result.project.join('README.md'), 'r') as readme:
+            markdown.markdown(readme.read())
+
+    def test_build_rst_default_Mozilla(self, cookies):
+        """build with .rst docs"""
+        result = cookies.bake(
+            extra_context={
+                'docs_filetype': 'rst',
+                'license': 'Mozilla Public License 2.0',
+            }
+        )
+        assert result.exit_code == 0
+
+        rstcheck(result.project.join('README.rst'))
 
 def test_black(cookies):
     """validate that all generated code is Black by default"""
